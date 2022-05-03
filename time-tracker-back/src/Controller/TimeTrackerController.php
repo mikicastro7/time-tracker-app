@@ -55,7 +55,7 @@ class TimeTrackerController extends AbstractController
             "status" => "success",
             "tasks" => $tasksData,
             "activeTask" => $activeTask,
-            "tasks_totals_times" => $tasksTimes
+            "tasks_totals_times" => $tasksTimes,
         ]);
     }
 
@@ -85,7 +85,11 @@ class TimeTrackerController extends AbstractController
         $em->flush($task);
 
         $taskData = [
-            "id" => $task->getId()
+            "id" => $task->getId(),
+            "name" => $task->getName(),
+            "start" => $task->getStartsAt()->getTimestamp(),
+            "end" => $task->getEndsAt(),
+            "active" => $task->getActive()
         ];
 
         return $this->json([
@@ -124,7 +128,11 @@ class TimeTrackerController extends AbstractController
         $em->flush($activeTask);
 
         $taskData = [
-            "id" => $activeTask->getId()
+            "id" => $activeTask->getId(),
+            "name" => $activeTask->getName(),
+            "start" => $activeTask->getStartsAt()->getTimestamp(),
+            "end" => $activeTask->getEndsAt()->getTimestamp(),
+            "active" => $activeTask->getActive()
         ];
 
         return $this->json([
