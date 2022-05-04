@@ -51,11 +51,17 @@ class TimeTrackerController extends AbstractController
 
         $tasksTimes =  $taskRepository->getTotalTimesTasks($date);
 
+        $totalTimeDay = 0;
+        foreach ($tasksTimes as $key => $task) {
+            $totalTimeDay += intval($task["task_total_time"]);
+        }
+
         return $this->json([
             "status" => "success",
             "tasks" => $tasksData,
             "activeTask" => $activeTask,
-            "tasks_totals_times" => $tasksTimes,
+            "tasksTotalsTimes" => $tasksTimes,
+            "totalTimeDay" => $totalTimeDay
         ]);
     }
 
